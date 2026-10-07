@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>iuh.edu</groupId>
+  <artifactId>NguyenVuThanh_Bai06</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>NguyenVuThanh_Bai06 Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <jersey.version>3.1.10</jersey.version>
+    </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+      <!-- 1. Jakarta EE 10 Web API (Provided bởi Tomcat 10) -->
+      <dependency>
+          <groupId>jakarta.platform</groupId>
+          <artifactId>jakarta.jakartaee-web-api</artifactId>
+          <version>10.0.0</version>
+          <scope>provided</scope>
+      </dependency>
+
+      <!-- 2. Jersey Server Core -->
+      <dependency>
+          <groupId>org.glassfish.jersey.core</groupId>
+          <artifactId>jersey-server</artifactId>
+          <version>${jersey.version}</version>
+      </dependency>
+
+      <!-- 3. Jersey Container Servlet (Xử lý REST API cho Tomcat) -->
+      <dependency>
+          <groupId>org.glassfish.jersey.containers</groupId>
+          <artifactId>jersey-container-servlet</artifactId>
+          <version>${jersey.version}</version>
+      </dependency>
+
+      <!-- 4. Chuyển đổi JSON-B (Yasson) -->
+      <dependency>
+          <groupId>org.glassfish.jersey.media</groupId>
+          <artifactId>jersey-media-json-binding</artifactId>
+          <version>${jersey.version}</version>
+      </dependency>
+
+      <!-- 5. HK2 Injection -->
+      <dependency>
+          <groupId>org.glassfish.jersey.inject</groupId>
+          <artifactId>jersey-hk2</artifactId>
+          <version>${jersey.version}</version>
+      </dependency>
+
+      <!-- 6. Weld: CDI container cho Tomcat -->
+      <dependency>
+          <groupId>org.jboss.weld.servlet</groupId>
+          <artifactId>weld-servlet-shaded</artifactId>
+          <version>5.1.2.Final</version>
+      </dependency>
+
+      <!-- 7. Cầu nối Jersey <-> CDI -->
+      <dependency>
+          <groupId>org.glassfish.jersey.ext.cdi</groupId>
+          <artifactId>jersey-cdi1x</artifactId>
+          <version>${jersey.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.ext.cdi</groupId>
+          <artifactId>jersey-cdi1x-servlet</artifactId>
+          <version>${jersey.version}</version>
+      </dependency>
+
+      <!-- 8. MariaDB JDBC Driver -->
+      <dependency>
+          <groupId>org.mariadb.jdbc</groupId>
+          <artifactId>mariadb-java-client</artifactId>
+          <version>3.3.5</version>
+      </dependency>
+
+      <!-- 9. Lombok -->
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.18.34</version>
+          <scope>provided</scope>
+      </dependency>
+  </dependencies>
+  <build>
+    <finalName>OnGK_05</finalName>
+  </build>
+</project>
