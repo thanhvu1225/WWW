@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Thống kê nhân sự</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body>
+<header class="topbar"><div><p class="eyebrow">SPRING DATA JPA · JPAREPOSITORY</p><h1>Quản lý nhân viên</h1></div><nav><a th:href="@{/employees}">Nhân viên</a><a class="active" th:href="@{/employees/reports}">Thống kê</a></nav></header>
+<main class="page">
+    <section class="hero-row"><div><p class="muted">Quan hệ Department 1–n Employee</p><h2>Thống kê nhân sự</h2></div></section>
+    <section class="stat-grid">
+        <article class="stat-card" th:each="stat : ${departmentStats}"><p th:text="${stat.departmentName}"></p><strong th:text="${stat.employeeCount}"></strong><span>nhân viên</span><small th:text="'TB ' + ${#numbers.formatDecimal(stat.averageSalary,0,'POINT',0,'COMMA')} + ' ₫ · Tổng ' + ${#numbers.formatDecimal(stat.totalSalary,0,'POINT',0,'COMMA')} + ' ₫'"></small></article>
+    </section>
+    <section class="split-grid">
+        <article class="table-card">
+            <div class="table-heading"><div><p class="muted">Xếp hạng lương</p><h3>Top 5 theo phòng ban</h3></div>
+                <form method="get" th:action="@{/employees/reports}"><select name="departmentId" onchange="this.form.submit()"><option value="">Chọn phòng ban</option><option th:each="item : ${departments}" th:value="${item.id}" th:text="${item.label}" th:selected="${item.id == departmentId}"></option></select></form>
+            </div>
+            <div class="table-wrap"><table><thead><tr><th>Nhân viên</th><th class="number">Lương</th></tr></thead><tbody><tr th:each="employee : ${topEmployees}"><td><strong th:text="${employee.name}"></strong><small th:text="${employee.positionTitle}"></small></td><td class="number" th:text="${#numbers.formatDecimal(employee.salary,0,'POINT',0,'COMMA')} + ' ₫'"></td></tr><tr th:if="${#lists.isEmpty(topEmployees)}"><td colspan="2" class="empty">Chọn một phòng ban để xem dữ liệu.</td></tr></tbody></table></div>
+        </article>
+        <article class="table-card"><div class="table-heading"><div><p class="muted">Kiểm tra phân bổ</p><h3>Phòng ban chưa có nhân viên</h3></div></div><ul class="empty-list"><li th:each="item : ${emptyDepartments}" th:text="${item.label}"></li><li th:if="${#lists.isEmpty(emptyDepartments)}">Tất cả phòng ban đều đã có nhân viên.</li></ul></article>
+    </section>
+</main>
+</body>
+</html>
+

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${employeeForm.id == null ? 'Thêm nhân viên' : 'Sửa nhân viên'}"></title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header class="topbar"><div><p class="eyebrow">SPRING DATA JDBC · CRUDREPOSITORY</p><h1>Quản lý nhân viên</h1></div><nav><a th:href="@{/employees}">Nhân viên</a><a th:href="@{/employees/reports}">Thống kê</a></nav></header>
+<main class="page narrow">
+    <a class="back" th:href="@{/employees}">← Quay lại danh sách</a>
+    <section class="form-card">
+        <div class="section-title">
+            <p class="muted" th:text="${employeeForm.id == null ? 'Hồ sơ mới' : 'Mã nhân viên #' + employeeForm.id}"></p>
+            <h2 th:text="${employeeForm.id == null ? 'Thêm nhân viên' : 'Cập nhật nhân viên'}"></h2>
+        </div>
+        <form method="post" th:object="${employeeForm}"
+              th:action="${employeeForm.id == null ? '/employees' : '/employees/' + employeeForm.id}">
+            <div class="form-grid">
+                <label class="wide">Họ và tên<input type="text" th:field="*{name}" placeholder="Nguyễn Văn An"><small class="field-error" th:errors="*{name}"></small></label>
+                <label>Vai trò<input type="text" th:field="*{role}" placeholder="Lập trình viên"><small class="field-error" th:errors="*{role}"></small></label>
+                <label>Tuổi<input type="number" min="18" max="70" th:field="*{age}"><small class="field-error" th:errors="*{age}"></small></label>
+                <label>Lương (VNĐ)<input type="number" min="0" step="100000" th:field="*{salary}"><small class="field-error" th:errors="*{salary}"></small></label>
+                <label>Phòng ban<select th:field="*{departmentId}"><option value="">Chọn phòng ban</option><option th:each="item : ${departments}" th:value="${item.id}" th:text="${item.label}"></option></select><small class="field-error" th:errors="*{departmentId}"></small></label>
+                <label>Chức vụ<select th:field="*{positionId}"><option value="">Chọn chức vụ</option><option th:each="item : ${positions}" th:value="${item.id}" th:text="${item.label}"></option></select><small class="field-error" th:errors="*{positionId}"></small></label>
+            </div>
+            <div class="form-actions"><a class="button secondary" th:href="@{/employees}">Hủy</a><button class="button primary" type="submit">Lưu nhân viên</button></div>
+        </form>
+    </section>
+</main>
+</body>
+</html>
+

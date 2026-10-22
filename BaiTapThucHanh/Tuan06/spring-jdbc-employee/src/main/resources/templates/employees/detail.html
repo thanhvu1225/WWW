@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chi tiết nhân viên</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body>
+<header class="topbar"><div><p class="eyebrow">SPRING JDBC · JDBCTEMPLATE</p><h1>Quản lý nhân viên</h1></div><nav><a th:href="@{/employees}">Nhân viên</a><a th:href="@{/employees/reports}">Thống kê</a></nav></header>
+<main class="page narrow">
+    <a class="back" th:href="@{/employees}">← Quay lại danh sách</a>
+    <section class="profile-card">
+        <div class="avatar" th:text="${#strings.substring(employee.name,0,1)}"></div>
+        <div class="profile-heading"><p class="muted" th:text="'Mã nhân viên #' + ${employee.id}"></p><h2 th:text="${employee.name}"></h2><span class="tag" th:text="${employee.positionTitle}"></span></div>
+        <dl class="detail-grid">
+            <div><dt>Vai trò</dt><dd th:text="${employee.role}"></dd></div>
+            <div><dt>Tuổi</dt><dd th:text="${employee.age}"></dd></div>
+            <div><dt>Phòng ban</dt><dd th:text="${employee.departmentName}"></dd></div>
+            <div><dt>Mức lương</dt><dd th:text="${#numbers.formatDecimal(employee.salary,0,'POINT',0,'COMMA')} + ' ₫'"></dd></div>
+        </dl>
+        <div class="form-actions"><a class="button primary" th:href="@{/employees/{id}/edit(id=${employee.id})}">Chỉnh sửa</a><form method="post" th:action="@{/employees/{id}/delete(id=${employee.id})}" onsubmit="return confirm('Xóa nhân viên này?')"><button class="button danger" type="submit">Xóa nhân viên</button></form></div>
+    </section>
+</main>
+</body>
+</html>

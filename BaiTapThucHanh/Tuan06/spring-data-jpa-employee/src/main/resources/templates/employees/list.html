@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản lý nhân viên - Spring Data JPA</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header class="topbar">
+    <div>
+        <p class="eyebrow">SPRING DATA JPA · JPAREPOSITORY</p>
+        <h1>Quản lý nhân viên</h1>
+    </div>
+    <nav aria-label="Điều hướng chính">
+        <a class="active" th:href="@{/employees}">Nhân viên</a>
+        <a th:href="@{/employees/reports}">Thống kê</a>
+    </nav>
+</header>
+
+<main class="page">
+    <div class="notice success" th:if="${message}" th:text="${message}"></div>
+    <div class="notice error" th:if="${error}" th:text="${error}"></div>
+
+    <section class="hero-row">
+        <div>
+            <p class="muted">Danh sách và tìm kiếm</p>
+            <h2>Hồ sơ nhân sự</h2>
+        </div>
+        <a class="button primary" th:href="@{/employees/new}">+ Thêm nhân viên</a>
+    </section>
+
+    <form class="filter-card" method="get" th:action="@{/employees}" th:object="${criteria}">
+        <label>ID<input type="number" min="1" th:field="*{id}" placeholder="VD: 12"></label>
+        <label>Tên<input type="search" th:field="*{name}" placeholder="Nhập tên cần tìm"></label>
+        <label>Tuổi từ<input type="number" min="18" th:field="*{minAge}" placeholder="18"></label>
+        <label>Tuổi đến<input type="number" min="18" th:field="*{maxAge}" placeholder="70"></label>
+        <label>Lương lớn hơn<input type="number" min="0" step="100000" th:field="*{minSalary}" placeholder="10000000"></label>
+        <label>Phòng ban
+            <select th:field="*{departmentId}">
+                <option value="">Tất cả</option>
+                <option th:each="item : ${departments}" th:value="${item.id}" th:text="${item.label}"></option>
+            </select>
+        </label>
+        <label>Chức vụ
+            <select th:field="*{positionId}">
+                <option value="">Tất cả</option>
+                <option th:each="item : ${positions}" th:value="${item.id}" th:text="${item.label}"></option>
+            </select>
+        </label>
+        <div class="filter-actions">
+            <button class="button primary" type="submit">Tìm kiếm</button>
+            <a class="button secondary" th:href="@{/employees}">Xóa bộ lọc</a>
+        </div>
+    </form>
+
+    <section class="table-card">
+        <div class="table-heading">
+            <h3>Kết quả</h3>
+            <span class="count" th:text="${#lists.size(employees)} + ' nhân viên'"></span>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>ID</th><th>Nhân viên</th><th>Tuổi</th><th>Phòng ban</th><th>Chức vụ</th><th class="number">Lương</th><th>Thao tác</th></tr></thead>
+                <tbody>
+                <tr th:each="employee : ${employees}">
+                    <td th:text="${employee.id}"></td>
+                    <td><strong th:text="${employee.name}"></strong><small th:text="${employee.role}"></small></td>
+                    <td th:text="${employee.age}"></td>
+                    <td th:text="${employee.departmentName}"></td>
+                    <td><span class="tag" th:text="${employee.positionTitle}"></span></td>
+                    <td class="number" th:text="${#numbers.formatDecimal(employee.salary, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></td>
+                    <td class="actions">
+                        <a th:href="@{/employees/{id}(id=${employee.id})}">Xem</a>
+                        <a th:href="@{/employees/{id}/edit(id=${employee.id})}">Sửa</a>
+                        <form method="post" th:action="@{/employees/{id}/delete(id=${employee.id})}" onsubmit="return confirm('Xóa nhân viên này?')">
+                            <button type="submit">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(employees)}"><td colspan="7" class="empty">Không tìm thấy nhân viên phù hợp.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>
+
