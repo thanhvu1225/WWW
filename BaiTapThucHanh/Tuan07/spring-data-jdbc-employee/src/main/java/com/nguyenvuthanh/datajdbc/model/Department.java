@@ -1,0 +1,14 @@
+package com.nguyenvuthanh.datajdbc.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
+@Table("departments")
+public class Department {
+    @Id private Integer id;
+    private String name;
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+}
